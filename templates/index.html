@@ -5,10 +5,17 @@
     <meta charset="UTF-8">
     <title>Digit Recognition - SOF106 Group 2(11)</title>
     <script src="{% static 'script/index.js' %}"></script>
+    <script src="{% static 'script/painting.js' %}"></script>
+    <script src="{% static 'script/ajax_test.js' %}"></script>
 </head>
 <body>
 
 <h1>Welcome to Digit Recognition</h1>
 <h2>{{ what }}</h2>
+
+<div id="wrapper">
+    <canvas id="paint"></canvas>
+    <textarea id="test-response-text">null</textarea>
+</div>
 </body>
 </html>

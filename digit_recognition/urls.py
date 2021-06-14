@@ -18,9 +18,13 @@ from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
 from . import views
+from .api.test_api import test_api
+
+api_paths = ['a', 'b', 'c']
 
 urlpatterns = [
                   path('', views.index),
-
+                  *(path(f'api/{api_path}', test_api) for api_path in api_paths),
+                  # path('api/', views.api),
                   path('admin/', admin.site.urls),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

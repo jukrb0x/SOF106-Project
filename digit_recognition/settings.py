@@ -21,8 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # !!! SECRET_KEY is stored in the environment variables !!!
+SECRET_KEY = ''  # none
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
-print(SECRET_KEY)
+print("Secret key is" + SECRET_KEY)
 if SECRET_KEY == None:
     raise Exception('No Secret Key')
 

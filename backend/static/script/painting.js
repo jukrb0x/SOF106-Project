@@ -8,7 +8,6 @@ function initCanvas() {
     ctx = document.getElementById("paint").getContext("2d");
     ctx.strokeStyle = color;
     ctx.lineWidth = 5;
-
     drawTouch();
     drawPointer();
     drawMouse();

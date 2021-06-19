@@ -7,6 +7,7 @@ Receive data: image
 
 """
 
+
 # Test API to handle POST data
 def test(request: WSGIRequest):
     print(type(request))

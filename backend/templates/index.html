@@ -4,10 +4,11 @@
     {% load static %}
     <meta charset="UTF-8">
     <title>Digit Recognition - SOF106 Group 2(11)</title>
-    <script src="{% static 'script/index.js' %}"></script>
-    <script src="{% static 'script/painting.js' %}"></script>
-    <script src="{% static 'script/ajax_test.js' %}"></script>
     <link rel="stylesheet" href="{% static 'style/index.css' %}">
+
+    <!-- mobile adaption -->
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 <body>
 
@@ -19,7 +20,15 @@ Canvas -> IMG -> sender() -> waiting handler -> receive results -> print results
 results: number with probability
 -->
 <div id="wrapper">
-    <canvas id="paint" width="280" height="280"></canvas>
+    {#    <canvas id="paint" width="280" height="280"></canvas>#}
+    {#    <div id="painting">#}
+    {#        <canvas id="painting-pad"></canvas>#}
+    {#    </div>#}
+   
+
+    <div id="paint-control-unit">
+        <button type="button" id="paint-clear">Clear</button>
+    </div>
     <div id="api-test-wrapper" style="display: flex; flex-direction: column;">
         <p>API test</p>
         <textarea style="height: 100px;" id="test-response-text">response</textarea>
@@ -32,4 +41,14 @@ results: number with probability
     <span id="api-response-status"></span>
 </div>
 </body>
+<footer>
+    {% comment %}
+    Signature pad @2.3.2
+    https://github.com/szimek/signature_pad/
+    {% endcomment %}
+    <script src="{% static 'script/signature_pad.min.js' %}"></script>
+    <script src="{% static 'script/index.js' %}"></script>
+    {#    <script src="{% static 'script/painting.js' %}"></script>#}
+    <script src="{% static 'script/ajax_test.js' %}"></script>
+</footer>
 </html>

@@ -13,7 +13,7 @@ def index(request):
     _type = "Type of request: " + str(type(request))
     print(_type)
     context['time'] = time.asctime(time.localtime(time.time()))
-    print(context)
+    print("Context Dict: " + str(context))
     # eject the context to the template
     return render(request, 'index.html', context)
 

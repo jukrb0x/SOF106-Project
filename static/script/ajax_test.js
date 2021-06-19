@@ -1,14 +1,18 @@
-// rewrite textarea with response
+// response callback
 function success(text) {
-    console.log('🐍 success!')
+    var status_text = '🐍 success!';
+    console.log(status_text);
     var textarea = document.getElementById('test-response-text');
     textarea.value = text;
+    document.getElementById('api-response-status').innerHTML = status_text;
 }
 
 function fail(code) {
-    console.log("🍷 failed!")
+    var status_text = "🍷 failed!";
+    console.log(status_text);
     var textarea = document.getElementById('test-response-text');
     textarea.value = 'Error code: ' + code;
+    document.getElementById('api-response-status').innerHTML = status_text;
 }
 
 
@@ -26,15 +30,21 @@ request.onreadystatechange = function () { // 状态发生变化时，函数被�
         }
     } else {
         // HTTP请求还在继续...
-        var textarea = document.getElementById('test-response-text')
+        var textarea = document.getElementById('test-response-text');
         textarea.value = 'Something..'
     }
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("api-window-url").textContent = window.location.href;
+})
+
 // 发送请求:
 function sender() {
-    request.open('GET', '/api/');
+    var api_path = document.getElementById("test-api-path").value;
+    request.open('GET', api_path);
     request.send();
-    alert('请求已发送，请等待响应...');
+    console.log("API requested, PATH: ", api_path)
+    // alert('请求已发送，请等待响应...');
 }
 

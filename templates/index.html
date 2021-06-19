@@ -20,8 +20,16 @@ results: number with probability
 -->
 <div id="wrapper">
     <canvas id="paint" width="280" height="280"></canvas>
-    <textarea id="test-response-text">null</textarea>
-    <button onclick="sender()" type="button">ABC</button>
+    <div id="api-test-wrapper" style="display: flex; flex-direction: column;">
+        <p>API test</p>
+        <textarea style="height: 100px;" id="test-response-text">response</textarea>
+        <div style="display: flex;">
+            <span id="api-window-url" style="font-family: monospace, serif"></span>
+            <input id="test-api-path" type="text" style="width: 300px;" value="api/">
+        </div>
+    </div>
+    <button onclick="sender()" type="button">Send</button>
+    <span id="api-response-status"></span>
 </div>
 </body>
 </html>

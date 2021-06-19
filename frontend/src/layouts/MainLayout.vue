@@ -94,13 +94,16 @@ const linksData = [
   }
 ];
 
-import { Vue, Component } from 'vue-property-decorator';
+import { defineComponent, ref } from '@vue/composition-api';
 
-@Component({
-  components: { EssentialLink }
-})
-export default class MainLayout extends Vue {
-  leftDrawerOpen = false;
-  essentialLinks = linksData;
-}
+export default defineComponent({
+  name: 'MainLayout',
+  components: { EssentialLink },
+  setup() {
+    const leftDrawerOpen = ref(false);
+    const essentialLinks = ref(linksData);
+
+    return {leftDrawerOpen, essentialLinks}
+  }
+});
 </script>

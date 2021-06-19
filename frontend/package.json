@@ -1,8 +1,8 @@
 {
-  "name": "pai-project",
+  "name": "digit-recognition-frontend",
   "version": "0.0.1",
-  "description": "Digit Recognition Frontend",
-  "productName": "Digit Recognition",
+  "description": "SOF106 Project Frontend",
+  "productName": "PAI Digit Recognition",
   "author": "jukrb0x <15688641+jukrb0x@users.noreply.github.com>",
   "private": true,
   "scripts": {
@@ -10,11 +10,10 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "@vue/composition-api": "^1.0.0-rc.3",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "quasar": "^1.0.0",
-    "vue-class-component": "^7.2.2",
-    "vue-property-decorator": "^8.3.0"
+    "quasar": "^1.0.0"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",

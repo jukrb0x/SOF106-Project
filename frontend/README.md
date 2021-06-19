@@ -1,6 +1,6 @@
-# Digit Recognition (pai-project)
+# PAI Digit Recognition (digit-recognition-frontend)
 
-Digit Recognition Frontend
+SOF106 Project Frontend
 
 ## Install the dependencies
 ```bash

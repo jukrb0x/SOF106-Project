@@ -20,7 +20,7 @@ module.exports = configure(function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://v1.quasar.dev/quasar-cli/boot-files
     boot: [
-      
+      'composition-api',
       'axios',
     ],
 
@@ -113,9 +113,9 @@ module.exports = configure(function (/* ctx */) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: `Digit Recognition`,
-        short_name: `Digit Recognition`,
-        description: `Digit Recognition Frontend`,
+        name: `PAI Digit Recognition`,
+        short_name: `PAI Digit Recognition`,
+        description: `SOF106 Project Frontend`,
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
@@ -180,7 +180,7 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'pai-project'
+        appId: 'digit-recognition-frontend'
       },
 
       // More info: https://v1.quasar.dev/quasar-cli/developing-electron-apps/node-integration

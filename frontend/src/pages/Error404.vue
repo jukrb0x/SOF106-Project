@@ -23,8 +23,9 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { defineComponent } from '@vue/composition-api';
 
-@Component
-export default class Error404 extends Vue {}
+export default defineComponent({
+  name: 'Error404',
+});
 </script>

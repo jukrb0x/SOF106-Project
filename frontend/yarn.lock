@@ -2301,9 +2301,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001219:
-  version "1.0.30001238"
-  resolved "https://registry.nlark.com/caniuse-lite/download/caniuse-lite-1.0.30001238.tgz?cache=0&sync_timestamp=1623999794080&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcaniuse-lite%2Fdownload%2Fcaniuse-lite-1.0.30001238.tgz#e6a8b45455c5de601718736d0242feef0ecdda15"
-  integrity sha1-5qi0VFXF3mAXGHNtAkL+7w7N2hU=
+  version "1.0.30001239"
+  resolved "https://registry.nlark.com/caniuse-lite/download/caniuse-lite-1.0.30001239.tgz?cache=0&sync_timestamp=1624135794219&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcaniuse-lite%2Fdownload%2Fcaniuse-lite-1.0.30001239.tgz#66e8669985bb2cb84ccb10f68c25ce6dd3e4d2b8"
+  integrity sha1-ZuhmmYW7LLhMyxD2jCXObdPk0rg=
 
 chalk@4.1.1, chalk@^4.1.0:
   version "4.1.1"
@@ -2732,6 +2732,11 @@ core-js-compat@^3.14.0, core-js-compat@^3.6.5:
   dependencies:
     browserslist "^4.16.6"
     semver "7.0.0"
+
+core-js@^2.6.5:
+  version "2.6.12"
+  resolved "https://registry.nlark.com/core-js/download/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
+  integrity sha1-2TM9+nsGXjR8xWgiGdb2kIWcwuw=
 
 core-js@^3.6.5:
   version "3.14.0"
@@ -7232,10 +7237,23 @@ shell-quote@^1.6.1:
   resolved "https://registry.npm.taobao.org/shell-quote/download/shell-quote-1.7.2.tgz#67a7d02c76c9da24f99d20808fcaded0e0e04be2"
   integrity sha1-Z6fQLHbJ2iT5nSCAj8re0ODgS+I=
 
+sign-canvas@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npm.taobao.org/sign-canvas/download/sign-canvas-1.1.4.tgz#1261e3a32fb48957622791995701f03674c2f233"
+  integrity sha1-EmHjoy+0iVdiJ5GZVwHwNnTC8jM=
+  dependencies:
+    core-js "^2.6.5"
+    vue "^2.6.10"
+
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.3"
   resolved "https://registry.npm.taobao.org/signal-exit/download/signal-exit-3.0.3.tgz?cache=0&sync_timestamp=1592843131591&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsignal-exit%2Fdownload%2Fsignal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha1-oUEMLt2PB3sItOJTyOrPyvBXRhw=
+
+signature_pad@^3.0.0-beta.4:
+  version "3.0.0-beta.4"
+  resolved "https://registry.npm.taobao.org/signature_pad/download/signature_pad-3.0.0-beta.4.tgz#2a8441559e9f439e7f2f525da3ee630ef973ecf6"
+  integrity sha1-KoRBVZ6fQ55/L1Jdo+5jDvlz7PY=
 
 simple-swizzle@^0.2.2:
   version "0.2.2"
@@ -8194,7 +8212,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
 
-vue@2.6.14:
+vue@2.6.14, vue@^2.6.10:
   version "2.6.14"
   resolved "https://registry.nlark.com/vue/download/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
   integrity sha1-5RqlJQJQ1Wmj+606ilpofWA24jU=

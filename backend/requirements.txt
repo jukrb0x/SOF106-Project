@@ -107,3 +107,5 @@ wcwidth==0.2.5
 Werkzeug==1.0.1
 zipp==3.4.0
 zope.interface==5.1.2
+
+tensorflow~=2.5.0

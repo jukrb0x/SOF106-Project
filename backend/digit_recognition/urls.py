@@ -26,6 +26,8 @@ api_paths = ['a', 'b', 'c']
 urlpatterns = [
                   path('', views.index),
                   # *(path(f'api/{api_path}', test_api) for api_path in api_paths),
-                  path('api/', views.api),
+                  path('api/', views.api_root_handler),
+                  # this is kind of stupid but I will improve it.
+                  path('api/test/', views.api_root_test_handler),
                   path('admin/', admin.site.urls),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

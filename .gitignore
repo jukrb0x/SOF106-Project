@@ -1,6 +1,8 @@
 # OS cache
 .DS_Store
 
+# IDEA config
+.idea/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

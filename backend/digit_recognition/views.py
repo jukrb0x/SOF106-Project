@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from django.core.handlers.wsgi import WSGIRequest
 from django.shortcuts import render, HttpResponse
 
 import time
@@ -27,9 +30,14 @@ def api_root_handler(request):
     <html><body><pre>Welcome to API root</pre></body></html>
     """
     ret = api_html_template
-    return HttpResponse(ret)
+    if request.method == 'POST':
+        return HttpResponse(ret)
+    else:
+        return HttpResponse(ret)
 
 
 def api_root_test_handler(request):
     context = {'time': time.asctime(time.localtime(time.time()))}
     return render(request, 'api-tester.html', context)
+
+

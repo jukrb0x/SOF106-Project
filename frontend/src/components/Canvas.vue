@@ -85,12 +85,15 @@
                     </span>
           </li>
         </ul>
-        <div class="sign-btns">
+        <div class="sign-btns row-sm">
           <q-btn color="primary" id="clear" @click="canvasClear()">清空</q-btn>
           <q-btn color="primary" id="save" @click="saveAsImg()">保存</q-btn>
           <q-btn color="primary" id="download" @click="downloadSignImg()">下载</q-btn>
           <q-btn color="primary" id="compress" @click="dealImage()">压缩</q-btn>
+          <q-btn color="green" id="sender" @click="sender()">Send</q-btn>
         </div>
+        <textarea class="q-mt-sm" name="base64-img" id="" cols="50" rows="10"
+                  placeholder="the base64 code">{{value}}</textarea>
       </div>
     </div>
 
@@ -127,7 +130,19 @@ export default {
       }
     }
   },
+  watch: {
+    value: function (newValue) {
+      this.$axios
+        .post('img/', newValue)
+        .then(
+          response => {
+            console.log(response)
+          }
+        )
+    },
+  },
   methods: {
+
     /**
      * 清除画板
      */
@@ -139,7 +154,7 @@ export default {
      */
     saveAsImg() {
       const img = this.$refs.SignCanvas.saveAsImg();
-      console.log(`base64 code of the image:\n ${img}`);
+      console.log(`base64 code of the image:\n${img}`);
       alert(`image 的base64：${img}`);
     },
     /**
@@ -157,69 +172,30 @@ export default {
   }
 }
 </script>
-<style lang="css">
-* {
-  margin: 0;
-  padding: 0;
-}
+<style lang="sass">
+.sign-canvas
+  display: block
+  margin: 20px auto
 
-.title {
-  padding: 20px;
-  text-align: center;
-}
 
-.sign-canvas {
-  display: block;
-  margin: 20px auto;
-}
+.view-image
+  display: block
+  margin: 20px auto
 
-.view-image {
-  display: block;
-  margin: 20px auto;
-}
 
-.config {
-  width: 350px;
-  margin: 20px auto;
+.config
+  margin: 20px auto
 
-.ul-config {
+  .ul-config
+    .li-c
+      display: flex
+      align-items: center
+      padding: 4px 10px
 
-.li-c {
-  display: flex;
-  align-items: center;
-  padding: 4px 10px;
+      .item-content
+        margin-left: 10px
 
-.item-label {
-  font-size: 14px;
-}
-
-.item-content {
-  margin-left: 10px;
-}
-
-}
-}
-}
-
-.sign-btns {
-  display: flex;
-  justify-content: space-between;
-
-#clear,
-#clear1,
-#save {
-  display: inline-block;
-  padding: 5px 10px;
-  width: 76px;
-  height: 40px;
-  line-height: 40px;
-  border: 1px solid #eee;
-  background: #e1e1e1;
-  border-radius: 10px;
-  text-align: center;
-  margin: 20px auto;
-  cursor: pointer;
-}
-
-}
+.sign-btns
+  > button
+    margin: 2px
 </style>

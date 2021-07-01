@@ -1,5 +1,6 @@
+import base64
 import json
-
+from PIL import Image
 from django.core.handlers.wsgi import WSGIRequest
 from django.shortcuts import HttpResponse
 
@@ -24,6 +25,13 @@ def image_handler(request: WSGIRequest):
         )
 
         # TODO: handle recognition here
+
+        req = json.loads(request.body, encoding='utf-8')
+        try:
+            with open("./img.png", "wb") as fh:
+                fh.write(base64.urlsafe_b64decode(req['imgValue']))
+        except:
+            print("Exception with reading the image")
 
         # response json data
         res = json.dumps({

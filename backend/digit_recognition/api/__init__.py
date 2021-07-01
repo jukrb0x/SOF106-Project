@@ -1,1 +1,1 @@
-__all__ = ['image', 'test_api']
+__all__ = ['image']

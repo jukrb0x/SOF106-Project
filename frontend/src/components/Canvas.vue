@@ -3,10 +3,10 @@
     <!-- canvas component -->
     <div class="row">
       <div id="drawing q-pa-lg">
-        <sign-canvas class="sign-canvas" ref="SignCanvas" :options="options" v-model="data.imgValue"/>
-        <img v-if="data.imgValue" class="view-image" :src="data.imgValue" width="150" height="150" alt="result">
-        <span id="result">{{ result }}</span>
-        <span id="probability">{{ probability }}</span>
+        <sign-canvas class="sign-canvas" ref="SignCanvas" :options="options" v-model="imgValue"/>
+        <img v-if="imgValue" class="view-image" :src="imgValue" width="150" height="150" alt="result">
+        <p id="result">Number: {{ result }}</p>
+        <p id="probability">Probability: {{ probability }}</p>
       </div>
       <div class="config q-pa-lg">
         <ul class="ul-config">
@@ -95,7 +95,7 @@
           <q-btn color="primary" id="compress" @click="dealImage()">压缩</q-btn>
         </div>
         <textarea class="q-mt-sm" name="base64-img" id="" cols="50" rows="10"
-                  placeholder="the base64 code">{{ data.value }}</textarea>
+                  placeholder="the base64 code">{{ imgValue }}</textarea>
       </div>
     </div>
 
@@ -108,9 +108,7 @@ export default {
   components: {SignCanvas},
   data() {
     return {
-      data: {
-        imgValue: null, // base64 of the image
-      },
+      imgValue: null, // base64 of the image
       result: null,
       probability: null,
       options: {
@@ -137,17 +135,22 @@ export default {
     }
   },
   watch: {
-    'data': {
-      handler: function (newValue) {
-        this.$axios
-          .post('img/', newValue)
-          .then(
-            response => {
-              console.log(response)
-            }
-          )
-      }, deep: true
-    },
+    'imgValue': function (newValue) {
+      const FormData = {imgValue: newValue.replace('data:image/png;base64,', '')}
+      this.$axios
+        .post('img/', FormData)
+        .then(
+          response => {
+            this.result = response.data.number;
+            this.probability = response.data.probability;
+          }
+        ).catch(
+        function (error) {
+          console.log(error)
+        }
+      )
+    }
+    ,
   },
   methods: {
 

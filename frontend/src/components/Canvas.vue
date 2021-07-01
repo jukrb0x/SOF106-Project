@@ -3,8 +3,11 @@
     <!-- canvas component -->
     <div class="row">
       <div id="drawing q-pa-lg">
-        <sign-canvas class="sign-canvas" ref="SignCanvas" :options="options" v-model="value"/>
-        <img v-if="value" class="view-image" :src="value" width="150" height="150" alt="result"></div>
+        <sign-canvas class="sign-canvas" ref="SignCanvas" :options="options" v-model="data.imgValue"/>
+        <img v-if="data.imgValue" class="view-image" :src="data.imgValue" width="150" height="150" alt="result">
+        <span id="result">{{ result }}</span>
+        <span id="probability">{{ probability }}</span>
+      </div>
       <div class="config q-pa-lg">
         <ul class="ul-config">
           <li class="li-c">
@@ -90,10 +93,9 @@
           <q-btn color="primary" id="save" @click="saveAsImg()">保存</q-btn>
           <q-btn color="primary" id="download" @click="downloadSignImg()">下载</q-btn>
           <q-btn color="primary" id="compress" @click="dealImage()">压缩</q-btn>
-          <q-btn color="green" id="sender" @click="sender()">Send</q-btn>
         </div>
         <textarea class="q-mt-sm" name="base64-img" id="" cols="50" rows="10"
-                  placeholder="the base64 code">{{value}}</textarea>
+                  placeholder="the base64 code">{{ data.value }}</textarea>
       </div>
     </div>
 
@@ -106,7 +108,11 @@ export default {
   components: {SignCanvas},
   data() {
     return {
-      value: null, // base64 of the image
+      data: {
+        imgValue: null, // base64 of the image
+      },
+      result: null,
+      probability: null,
       options: {
         isFullScreen: false,   ////是否全屏手写 [Boolean] 可选
         isFullCover: false, //是否全屏模式下覆盖所有的元素 [Boolean] 可选 (这个有意思，可以研究一下怎么实现的)
@@ -131,14 +137,16 @@ export default {
     }
   },
   watch: {
-    value: function (newValue) {
-      this.$axios
-        .post('img/', newValue)
-        .then(
-          response => {
-            console.log(response)
-          }
-        )
+    'data': {
+      handler: function (newValue) {
+        this.$axios
+          .post('img/', newValue)
+          .then(
+            response => {
+              console.log(response)
+            }
+          )
+      }, deep: true
     },
   },
   methods: {

@@ -2,6 +2,10 @@
 .thumbs.db
 node_modules
 
+# environment vars
+# .env.development
+# .env.production
+
 # Quasar core related directories
 .quasar
 /dist

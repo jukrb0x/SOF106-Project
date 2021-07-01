@@ -20,6 +20,7 @@ from django.conf import settings
 from . import views
 # from .api.test_api import test_api
 from .api.test_api import test
+from .api import *
 
 api_paths = ['a', 'b', 'c']
 
@@ -30,4 +31,5 @@ urlpatterns = [
                   # this is kind of stupid but I will improve it.
                   path('api/test/', views.api_root_test_handler),
                   path('admin/', admin.site.urls),
+                  path('img/', image.image_handler),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -13,14 +13,19 @@
 </template>
 
 <script lang="ts">
-import {Todo, Meta} from 'components/models';
+import { Todo, Meta } from 'components/models';
 import ExampleComponent from 'components/CompositionComponent.vue';
-import {defineComponent, ref} from '@vue/composition-api';
+import { defineComponent, ref } from '@vue/composition-api';
 import Canvas from "components/Canvas.vue";
 
 export default defineComponent({
   name: 'PageIndex',
   components: {Canvas, ExampleComponent},
+  mounted() {
+    if (process.env.DEV) {
+      console.log('%c You are currently in the development mode.', 'background: #222; color: #bada55');
+    }
+  },
   setup() {
     const todos = ref<Todo[]>([
       {

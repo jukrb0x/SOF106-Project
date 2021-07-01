@@ -120,8 +120,8 @@ export default {
         lastWriteWidth: 2,  //下笔的宽度 [Number] 可选
         lineCap: 'round',   //线条的边缘类型 [butt]平直的边缘 [round]圆形线帽 [square]	正方形线帽
         lineJoin: 'bevel',  //线条交汇时边角的类型  [bevel]创建斜角 [round]创建圆角 [miter]创建尖角。
-        canvasWidth: 350, //canvas宽高 [Number] 可选
-        canvasHeight: 370,  //高度  [Number] 可选
+        canvasWidth: 280, //canvas宽高 [Number] 可选
+        canvasHeight: 280,  //高度  [Number] 可选
         bgColor: '#fcc', //背景色 [String] 可选
         borderWidth: 1, // 网格线宽度  [Number] 可选
         borderColor: "#ff787f", //网格颜色  [String] 可选

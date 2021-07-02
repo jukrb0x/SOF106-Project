@@ -4,9 +4,9 @@
     <div class="row">
       <div id="drawing q-pa-lg">
         <sign-canvas class="sign-canvas" ref="SignCanvas" :options="options" v-model="imgValue"/>
-        <img v-if="imgValue" class="view-image" :src="imgValue" width="150" height="150" alt="result">
-        <p id="result">Number: {{ result }}</p>
-        <p id="probability">Probability: {{ probability }}</p>
+        <!-- <img v-if="imgValue" class="view-image" :src="imgValue" width="150" height="150" alt="result">-->
+        <p id="result">Number: {{ result.digit }}</p>
+        <p id="probability">Probability: {{ result.probability }}</p>
       </div>
       <div class="config q-pa-lg">
         <ul class="ul-config">
@@ -92,7 +92,6 @@
           <q-btn color="primary" id="clear" @click="canvasClear()">清空</q-btn>
           <q-btn color="primary" id="save" @click="saveAsImg()">保存</q-btn>
           <q-btn color="primary" id="download" @click="downloadSignImg()">下载</q-btn>
-          <q-btn color="primary" id="compress" @click="dealImage()">压缩</q-btn>
         </div>
         <textarea class="q-mt-sm" name="base64-img" id="" cols="50" rows="10"
                   placeholder="the base64 code">{{ imgValue }}</textarea>
@@ -109,8 +108,10 @@ export default {
   data() {
     return {
       imgValue: null, // base64 of the image
-      result: null,
-      probability: null,
+      result: {
+        digit: null,
+        probability: null,
+      },
       options: {
         isFullScreen: false,   ////是否全屏手写 [Boolean] 可选
         isFullCover: false, //是否全屏模式下覆盖所有的元素 [Boolean] 可选 (这个有意思，可以研究一下怎么实现的)
@@ -136,13 +137,15 @@ export default {
   },
   watch: {
     'imgValue': function (newValue) {
-      const FormData = {imgValue: newValue.replace('data:image/png;base64,', '')}
+      const FormData = {
+        imgValue: newValue.replace('data:image/png;base64,', '')
+      }
       this.$axios
-        .post('img/', FormData)
+        .post('api/img/', FormData)
         .then(
           response => {
-            this.result = response.data.number;
-            this.probability = response.data.probability;
+            this.result.digit = response.data.number;
+            this.result.probability = response.data.probability;
           }
         ).catch(
         function (error) {
@@ -159,6 +162,8 @@ export default {
      */
     canvasClear() {
       this.$refs.SignCanvas.canvasClear();
+      this.result.digit = null;
+      this.result.probability = null;
     },
     /**
      * 保存图片

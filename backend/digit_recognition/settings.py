@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # !!! SECRET_KEY is stored in the environment variables !!!
 SECRET_KEY = ''  # none
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
-print("Secret key is" + SECRET_KEY)
+print("Secret key is" + str(SECRET_KEY))
 if SECRET_KEY == None:
     raise Exception('No Secret Key')
 
@@ -32,7 +32,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]']
 
-CORS_ORIGIN_WHITELIST = ['http://localhost:8080', 'http://localhost:8088']
+CORS_ORIGIN_WHITELIST = ['http://localhost:8080', 'http://localhost:8088', 'http://127.0.0.1:8080',
+                         'http://127.0.0.1:8088']
 
 # Application definition
 

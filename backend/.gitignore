@@ -1,6 +1,10 @@
 # OS cache
 .DS_Store
 
+# predict image cache
+/digit_recognition/cache/
+
+
 # IDEA config
 .idea/
 
@@ -133,3 +137,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+

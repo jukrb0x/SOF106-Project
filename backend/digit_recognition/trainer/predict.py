@@ -24,9 +24,9 @@ class Predict:
         # load the latest checkpoint
         checkpoint_dir = os.path.join(PROJECT_ROOT, 'checkpoint/')
         latest_checkpoint = tf.train.latest_checkpoint(checkpoint_dir)  # path defined in train.py
-
         self.cnn = CNN()
         # load network weights
+        print("latest checkpoint: ", latest_checkpoint)
         self.cnn.model.load_weights(latest_checkpoint)
 
     def base64_to_image(self):
@@ -76,6 +76,7 @@ class Predict:
     def predict(self):
         x = self.img_array
         y = self.cnn.model.predict(x)
+        # FIXME
         prob = self.cnn.model.predict_proba(x)
         # print(self.img_base64_path)
         print(y[0])

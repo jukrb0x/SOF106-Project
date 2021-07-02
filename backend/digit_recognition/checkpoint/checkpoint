@@ -1,0 +1,2 @@
+model_checkpoint_path: "training-cp0034.ckpt"
+all_model_checkpoint_paths: "training-cp0034.ckpt"

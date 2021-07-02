@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Digit Recognition - SOF106 Group 2(11)</title>
+    <link rel="stylesheet" href="{% static 'style/index.css' %}">
+
+    <!-- mobile adaption -->
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+<body>
+
+<h1>Welcome to Digit Recognition</h1>
+<pre>{{ time }}</pre>
+
+<!--
+Canvas -> IMG -> sender() -> waiting handler -> receive results -> print results
+results: number with probability
+-->
+<div id="wrapper">
+    {#    <canvas id="paint" width="280" height="280"></canvas>#}
+    {#    <div id="painting">#}
+    {#        <canvas id="painting-pad"></canvas>#}
+    {#    </div>#}
+   
+
+    <div id="paint-control-unit">
+        <button type="button" id="paint-clear">Clear</button>
+    </div>
+    <div id="api-test-wrapper" style="display: flex; flex-direction: column;">
+        <p>API test</p>
+        <textarea style="height: 100px;" id="test-response-text">response</textarea>
+        <div style="display: flex;">
+            <span id="api-window-url" style="font-family: monospace, serif"></span>
+            <input id="test-api-path" type="text" style="width: 300px;" value="api/">
+        </div>
+    </div>
+    <button onclick="sender()" type="button">Send</button>
+    <span id="api-response-status"></span>
+</div>
+</body>
+<footer>
+    {% comment %}
+    Signature pad @2.3.2
+    https://github.com/szimek/signature_pad/
+    {% endcomment %}
+    <script src="{% static 'script/signature_pad.min.js' %}"></script>
+    <script src="{% static 'script/index.js' %}"></script>
+    {#    <script src="{% static 'script/painting.js' %}"></script>#}
+    <script src="{% static 'script/ajax_test.js' %}"></script>
+</footer>
+</html>

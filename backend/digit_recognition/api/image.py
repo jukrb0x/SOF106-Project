@@ -1,8 +1,15 @@
 import base64
 import json
+import os
+from io import BytesIO
+import numpy as np
+import tensorflow as tf
+
 from PIL import Image
 from django.core.handlers.wsgi import WSGIRequest
 from django.shortcuts import HttpResponse
+from numpy import ndarray
+from ..trainer import predict
 
 
 def image_handler(request: WSGIRequest):
@@ -24,19 +31,18 @@ def image_handler(request: WSGIRequest):
             "\nrequest.COOKIES: ", request.COOKIES,
         )
 
-        # TODO: handle recognition here
-
+        # load requests to json dict
         req = json.loads(request.body, encoding='utf-8')
-        try:
-            with open("./img.png", "wb") as fh:
-                fh.write(base64.urlsafe_b64decode(req['imgValue']))
-        except:
-            print("Exception with reading the image")
+        # initiate predict for request data
+        prediction = predict.Predict(req['imgValue'])
+        prediction.base64_to_image()
+        prediction.predict()
 
         # response json data
         res = json.dumps({
-            'number': 0,
-            'probability': 0
+            'number': str(prediction.digit),
+            # FIXME: probability
+            'probability': '0'
         })
         # return the data
         return HttpResponse(res)

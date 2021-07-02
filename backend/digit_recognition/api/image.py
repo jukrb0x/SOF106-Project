@@ -18,7 +18,15 @@ def image_handler(request: WSGIRequest):
     handle it to the recognition process,
     return the result number with probability.
     ------
-    * I did not write the data validity for requests, I should refine that someday.
+    Args:
+        request (WSGIRequest): the data contains a form of imgValue
+            imgValue: image data64 code
+    Returns:
+        HttpResponse (HttpResponse): a json form consist of result
+            {
+                number: 'str'
+                probability: 'str'
+            }
     """
     if request.method == 'POST':
         # for debugging usage

@@ -27,32 +27,10 @@ export default defineComponent({
     }
   },
   setup() {
-    const todos = ref<Todo[]>([
-      {
-        caption: 1,
-        content: 'ct1'
-      },
-      {
-        caption: 2,
-        content: 'ct2'
-      },
-      {
-        caption: 3,
-        content: 'ct3'
-      },
-      {
-        caption: 4,
-        content: 'ct4'
-      },
-      {
-        caption: 5,
-        content: 'ct5'
-      }
-    ]);
     const meta = ref<Meta>({
       totalCount: 1200
     });
-    return {todos, meta};
+    return {meta};
   }
 });
 </script>

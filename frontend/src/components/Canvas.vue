@@ -3,7 +3,12 @@
     <!-- canvas component -->
     <div class="main">
       <div id="drawing q-px-lg">
-        <sign-canvas class="sign-canvas" ref="SignCanvas" :options="options" v-model="imgValue"/>
+        <sign-canvas
+          class="sign-canvas"
+          ref="SignCanvas"
+          :options="options"
+          v-model="imgValue"
+        />
         <!-- <img v-if="imgValue" class="view-image" :src="imgValue" width="150" height="150" alt="result">-->
         <p id="result">Number: {{ result.digit }}</p>
         <!--        <p id="probability">Probability: {{ result.probability }}</p>-->
@@ -12,139 +17,157 @@
         <div class="row flex-center">
           <span class="option-title">Brush size:</span>
           <div class="q-gutter-sm">
-            <q-input name="brush-size" v-model="options.writeWidth" dense></q-input>
+            <q-input
+              name="brush-size"
+              v-model="options.writeWidth"
+              dense
+            ></q-input>
           </div>
         </div>
         <div class="row">
           <span class="option-title">High DPI:</span>
           <div class="q-gutter-sm">
-            <q-toggle
-              :label="`${dprLabel}`"
-              v-model="options.isDpr"
-            />
-
+            <q-toggle :label="`${dprLabel}`" v-model="options.isDpr"/>
           </div>
         </div>
         <div class="row content-center" style="height: 40px">
           <span class="option-title">Brush color:</span>
-          <input type="color" class="q-ml-sm" v-model="options.writeColor">
+          <input type="color" class="q-ml-sm" v-model="options.writeColor"/>
         </div>
         <div class="row q-my-lg">
           <q-btn color="primary" id="clear" @click="canvasReset()">Clear</q-btn>
         </div>
+        <div class="row content-center" style="height: 40px">
+          <span class="option-title">Backend port:</span>
+          <q-input name="brush-size" v-model="localPort" dense></q-input>
+        </div>
+        <!--        <div>connection status</div>-->
       </div>
-
-
     </div>
-
   </div>
 </template>
 <script>
-import SignCanvas from 'sign-canvas';
+import SignCanvas from "sign-canvas";
+import { debounce } from "quasar";
 
 export default {
   components: {SignCanvas},
   data() {
     return {
+      localPort: "8000",
       imgValue: null, // base64 of the image
       result: {
         digit: null,
-        probability: null,
+        probability: null
       },
       options: {
-        isFullScreen: false,   ////是否全屏手写 [Boolean] 可选
+        isFullScreen: false, ////是否全屏手写 [Boolean] 可选
         isFullCover: false, //是否全屏模式下覆盖所有的元素 [Boolean] 可选 (这个有意思，可以研究一下怎么实现的)
-        isDpr: false,       //是否使用dpr兼容高分屏 [Boolean] 可选
+        isDpr: false, //是否使用dpr兼容高分屏 [Boolean] 可选
         isShowBorder: false, //是否显示边框 [可选]
-        lastWriteSpeed: 1,  //书写速度 [Number] 可选
-        lastWriteWidth: 2,  //下笔的宽度 [Number] 可选
-        lineCap: 'round',   //线条的边缘类型 [butt]平直的边缘 [round]圆形线帽 [square]	正方形线帽
-        lineJoin: 'bevel',  //线条交汇时边角的类型  [bevel]创建斜角 [round]创建圆角 [miter]创建尖角。
+        lastWriteSpeed: 1, //书写速度 [Number] 可选
+        lastWriteWidth: 2, //下笔的宽度 [Number] 可选
+        lineCap: "round", //线条的边缘类型 [butt]平直的边缘 [round]圆形线帽 [square]	正方形线帽
+        lineJoin: "bevel", //线条交汇时边角的类型  [bevel]创建斜角 [round]创建圆角 [miter]创建尖角。
         canvasWidth: 280, //canvas宽高 [Number] 可选
-        canvasHeight: 280,  //高度  [Number] 可选
-        bgColor: '#fcc', //背景色 [String] 可选
+        canvasHeight: 280, //高度  [Number] 可选
+        bgColor: "#fcc", //背景色 [String] 可选
         borderWidth: 1, // 网格线宽度  [Number] 可选
         borderColor: "#ff787f", //网格颜色  [String] 可选
         writeWidth: 5, //基础轨迹宽度  [Number] 可选
         maxWriteWidth: 30, // 写字模式最大线宽  [Number] 可选
         minWriteWidth: 5, // 写字模式最小线宽  [Number] 可选
-        writeColor: '#101010', // 轨迹颜色  [String] 可选
+        writeColor: "#101010", // 轨迹颜色  [String] 可选
         isSign: true, //签名模式 [Boolean] 默认为非签名模式,有线框, 当设置为true的时候没有任何线框
-        imgType: 'png'   //下载的图片格式  [String] 可选为 jpeg  canvas本是透明背景的
+        imgType: "png" //下载的图片格式  [String] 可选为 jpeg  canvas本是透明背景的
       }
-    }
+    };
   },
   computed: {
+    localServer: function () {
+      return `http://localhost:${ this.localPort }/`;
+    },
     dprLabel: function () {
       if (this.options.isDpr) {
-        return 'ON'
+        return "ON";
       } else {
-        return 'OFF'
+        return "OFF";
       }
     }
   },
   watch: {
-    'imgValue': function (newValue) {
+    imgValue: function (newValue) {
       if (newValue) {
         let FormData = {
-          imgValue: newValue.replace('data:image/png;base64,', '')
+          imgValue: newValue.replace("data:image/png;base64,", "")
         };
 
         this.$axios
-          .post('api/img/', FormData)
-          .then(
-            response => {
-              this.result.digit = response.data.number;
-              this.result.probability = response.data.probability;
-            }
-          ).catch(
-          function (error) {
-            console.log("(Reach backend) " + error)
-          }
-        )
+          .post(this.localServer + "api/img/", FormData)
+          .then(response => {
+            this.result.digit = response.data.number;
+            this.result.probability = response.data.probability;
+          })
+          .catch(function (error) {
+            console.log("(Reach backend) " + error);
+          });
       }
-    }
+    },
+    localPort: debounce(function () {
+      this.connectTest(this.networkPopup);
+    }, 1000)
   },
   mounted() {
     // Test backend server connection
-    this.$axios
-      .get('api/')
-      .then(
-        response => {
-          this.networkPopup(response.status)
-        }
-      ).catch(
-      function (error) {
-        console.log(error);
-        this.networkPopup(error);
-      }.bind(this)
-    )
+    this.connectTest(this.networkPopup);
+    // this.networkPopup(this.connectTest());
   },
   methods: {
-    // network status
+    // backend server test
+    connectTest(callback) {
+      this.$axios
+        .get(this.localServer + "api/")
+        .then(response => {
+          let ret = response.status;
+          if (callback) {
+            callback(ret);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          let ret = error;
+          if (callback) {
+            callback(ret);
+          }
+        });
+    },
+    // network status popup
     networkPopup(status) {
+      console.log("stat ", status);
       if (status === 200) {
         this.$q.notify({
-          message: 'Good to go',
-          caption: 'Backend server connected',
-          color: 'green',
-          icon: 'done'
-        })
+          message: "Good to go",
+          caption: "Backend server connected",
+          color: "green",
+          icon: "done"
+        });
       } else {
-        this.$q.dialog({
-          name: 'Cannot connect Backend Server',
-          message: `Error message:\n ${ status.message }`,
-          position: 'bottom',
-          persistent: true
-        }).onDismiss(() => {
-          console.log('.')
-          this.$q.notify({
-            message: 'This program may not be functional as expected',
-            caption: 'Refresh and try again',
-            color: 'red',
-            icon: 'warning'
+        this.$q
+          .dialog({
+            name: "Cannot connect Backend Server",
+            message: `Error message:\n ${ status.message }`,
+            position: "bottom",
+            persistent: true
           })
-        })
+          .onDismiss(() => {
+            console.log(".");
+            this.$q.notify({
+              message: "This program may not be functional as expected",
+              caption: "Refresh and try again",
+              color: "red",
+              icon: "warning"
+            });
+          });
       }
     },
     // reset canvas
@@ -154,7 +177,7 @@ export default {
       this.result.probability = null;
     }
   }
-}
+};
 </script>
 <style lang="sass">
 .main
@@ -176,6 +199,4 @@ export default {
 .view-image
   display: block
   margin: 20px auto
-
-
 </style>

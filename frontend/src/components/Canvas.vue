@@ -81,17 +81,11 @@
                         <input type="color" v-model="options.writeColor">
                     </span>
           </li>
-          <li class="li-c">
-            <span class="item-label">背景色:</span>
-            <span class="item-content">
-                        <input type="color" v-model="options.bgColor">
-                    </span>
-          </li>
+         
         </ul>
         <div class="sign-btns row-sm">
-          <q-btn color="primary" id="clear" @click="canvasClear()">清空</q-btn>
-          <q-btn color="primary" id="save" @click="saveAsImg()">保存</q-btn>
-          <q-btn color="primary" id="download" @click="downloadSignImg()">下载</q-btn>
+          <q-btn color="primary" id="clear" @click="canvasReset()">清空</q-btn>
+
         </div>
         <textarea class="q-mt-sm" name="base64-img" id="" cols="50" rows="10"
                   placeholder="the base64 code">{{ imgValue }}</textarea>
@@ -137,53 +131,73 @@ export default {
   },
   watch: {
     'imgValue': function (newValue) {
-      const FormData = {
-        imgValue: newValue.replace('data:image/png;base64,', '')
-      }
-      this.$axios
-        .post('api/img/', FormData)
-        .then(
-          response => {
-            this.result.digit = response.data.number;
-            this.result.probability = response.data.probability;
+      if (newValue) {
+        let FormData = {
+          imgValue: newValue.replace('data:image/png;base64,', '')
+        };
+
+        this.$axios
+          .post('api/img/', FormData)
+          .then(
+            response => {
+              this.result.digit = response.data.number;
+              this.result.probability = response.data.probability;
+            }
+          ).catch(
+          function (error) {
+            console.log("(Reach backend) " + error)
           }
-        ).catch(
-        function (error) {
-          console.log(error)
-        }
-      )
+        )
+      }
     }
-    ,
+  },
+  mounted() {
+    // Test backend server connection
+    this.$axios
+      .get('api/')
+      .then(
+        response => {
+          this.networkPopup(response.status)
+        }
+      ).catch(
+      function (error) {
+        console.log(error);
+        this.networkPopup(error);
+      }.bind(this)
+    )
   },
   methods: {
-
-    /**
-     * 清除画板
-     */
-    canvasClear() {
+    // network status
+    networkPopup(status) {
+      if (status === 200) {
+        this.$q.notify({
+          message: 'Good to go',
+          caption: 'Backend server connected',
+          color: 'green',
+          icon: 'done'
+        })
+      } else {
+        this.$q.dialog({
+          title: 'Cannot connect Backend Server',
+          message: `Error message:\n ${status.message}`,
+          position: 'bottom',
+          persistent: true
+        }).onDismiss(() => {
+          console.log('.')
+          this.$q.notify({
+            message: 'This program may not be functional as expected',
+            caption: 'Refresh and try again',
+            color: 'red',
+            icon: 'warning'
+          })
+        })
+      }
+    },
+    // reset canvas
+    canvasReset() {
       this.$refs.SignCanvas.canvasClear();
       this.result.digit = null;
       this.result.probability = null;
-    },
-    /**
-     * 保存图片
-     */
-    saveAsImg() {
-      const img = this.$refs.SignCanvas.saveAsImg();
-      console.log(`base64 code of the image:\n${img}`);
-      alert(`image 的base64：${img}`);
-    },
-    /**
-     * 下载图片
-     */
-    downloadSignImg() {
-      this.$refs.SignCanvas.downloadSignImg();
-    },
-    /**
-     * 下载dealImage图片
-     */
-    dealImage() {
-      this.$refs.SignCanvas.dealImage();
     }
   }
 }

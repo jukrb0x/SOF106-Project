@@ -1,101 +1,40 @@
 <template>
   <div>
     <!-- canvas component -->
-    <div class="row">
-      <div id="drawing q-pa-lg">
+    <div class="main">
+      <div id="drawing q-px-lg">
         <sign-canvas class="sign-canvas" ref="SignCanvas" :options="options" v-model="imgValue"/>
         <!-- <img v-if="imgValue" class="view-image" :src="imgValue" width="150" height="150" alt="result">-->
         <p id="result">Number: {{ result.digit }}</p>
-        <p id="probability">Probability: {{ result.probability }}</p>
+        <!--        <p id="probability">Probability: {{ result.probability }}</p>-->
       </div>
-      <div class="config q-pa-lg">
-        <ul class="ul-config">
-          <li class="li-c">
-            <span class="item-label">书写速度:</span>
-            <span class="item-content">
-                        <select name="isSign" v-model="options.isSign">
-                            <option :value="true">签名</option>
-                            <option :value="false">写字</option>
-                        </select>
-                    </span>
-          </li>
-          <li class="li-c">
-            <span class="item-label">显示边框/网格:</span>
-            <span class="item-content">
-                        <select name="isSign" v-model="options.isShowBorder">
-                            <option :value="true">显示</option>
-                            <option :value="false">不显示</option>
-                        </select>
-                    </span>
-          </li>
-          <li class="li-c">
-            <span class="item-label">兼容高分屏高清绘制:</span>
-            <span class="item-content">
-                        <select name="isSign" v-model="options.isDpr">
-                            <option :value="true">启用</option>
-                            <option :value="false">关闭</option>
-                        </select>
-                    </span>
-          </li>
-          <li class="li-c">
-            <span class="item-label">边框宽度:</span>
-            <span class="item-content">
-                        <input v-model="options.borderWidth" type="number">
-                    </span>
-          </li>
-          <li class="li-c">
-            <span class="item-label">下笔宽度:</span>
-            <span class="item-content">
-                        <input v-model="options.writeWidth" type="number">
-                    </span>
-          </li>
-          <li class="li-c">
-            <span class="item-label">图片类型:</span>
-            <span class="item-content">
-                        <input v-model="options.imgType" type="text">
-                    </span>
-          </li>
-          <li class="li-c">
-            <span class="item-label">线条的边缘类型:</span>
-            <span class="item-content">
-                        <select name="lineCap" v-model="options.lineCap">
-                            <option value="butt">平直的边缘</option>
-                            <option value="round">圆形线帽</option>
-                            <option value="square">正方形线帽</option>
-                        </select>
-                    </span>
-          </li>
-          <li class="li-c">
-            <span class="item-label">线条交汇时边角的类型:</span>
-            <span class="item-content">
-                        <select name="lineCap" v-model="options.lineJoin">
-                            <option value="bevel">创建斜角</option>
-                            <option value="round">创建圆角</option>
-                            <option value="miter">创建尖角</option>
-                        </select>
-                    </span>
-          </li>
-          <li class="li-c">
-            <span class="item-label">画笔颜色:</span>
-            <span class="item-content">
-                        <input type="color" v-model="options.writeColor">
-                    </span>
-          </li>
-          <li class="li-c">
-            <span class="item-label">背景色:</span>
-            <span class="item-content">
-                        <input type="color" v-model="options.bgColor">
-                    </span>
-          </li>
-        </ul>
-        <div class="sign-btns row-sm">
-          <q-btn color="primary" id="clear" @click="canvasClear()">清空</q-btn>
-          <q-btn color="primary" id="save" @click="saveAsImg()">保存</q-btn>
-          <q-btn color="primary" id="download" @click="downloadSignImg()">下载</q-btn>
+      <div class="q-px-lg q-pa-lg col content-center justify-sm-start">
+        <div class="row flex-center">
+          <span class="option-title">Brush size:</span>
+          <div class="q-gutter-sm">
+            <q-input name="brush-size" v-model="options.writeWidth" dense></q-input>
+          </div>
         </div>
-        <textarea class="q-mt-sm" name="base64-img" id="" cols="50" rows="10"
-                  placeholder="the base64 code">{{ imgValue }}</textarea>
+        <div class="row">
+          <span class="option-title">High DPI:</span>
+          <div class="q-gutter-sm">
+            <q-toggle
+              :label="`${dprLabel}`"
+              v-model="options.isDpr"
+            />
+
+          </div>
+        </div>
+        <div class="row content-center" style="height: 40px">
+          <span class="option-title">Brush color:</span>
+          <input type="color" class="q-ml-sm" v-model="options.writeColor">
+        </div>
+        <div class="row q-my-lg">
+          <q-btn color="primary" id="clear" @click="canvasReset()">Clear</q-btn>
+        </div>
       </div>
+
+
     </div>
 
   </div>
@@ -135,83 +74,108 @@ export default {
       }
     }
   },
+  computed: {
+    dprLabel: function () {
+      if (this.options.isDpr) {
+        return 'ON'
+      } else {
+        return 'OFF'
+      }
+    }
+  },
   watch: {
     'imgValue': function (newValue) {
-      const FormData = {
-        imgValue: newValue.replace('data:image/png;base64,', '')
-      }
-      this.$axios
-        .post('api/img/', FormData)
-        .then(
-          response => {
-            this.result.digit = response.data.number;
-            this.result.probability = response.data.probability;
+      if (newValue) {
+        let FormData = {
+          imgValue: newValue.replace('data:image/png;base64,', '')
+        };
+
+        this.$axios
+          .post('api/img/', FormData)
+          .then(
+            response => {
+              this.result.digit = response.data.number;
+              this.result.probability = response.data.probability;
+            }
+          ).catch(
+          function (error) {
+            console.log("(Reach backend) " + error)
           }
-        ).catch(
-        function (error) {
-          console.log(error)
-        }
-      )
+        )
+      }
     }
-    ,
+  },
+  mounted() {
+    // Test backend server connection
+    this.$axios
+      .get('api/')
+      .then(
+        response => {
+          this.networkPopup(response.status)
+        }
+      ).catch(
+      function (error) {
+        console.log(error);
+        this.networkPopup(error);
+      }.bind(this)
+    )
   },
   methods: {
-
-    /**
-     * 清除画板
-     */
-    canvasClear() {
+    // network status
+    networkPopup(status) {
+      if (status === 200) {
+        this.$q.notify({
+          message: 'Good to go',
+          caption: 'Backend server connected',
+          color: 'green',
+          icon: 'done'
+        })
+      } else {
+        this.$q.dialog({
+          name: 'Cannot connect Backend Server',
+          message: `Error message:\n ${ status.message }`,
+          position: 'bottom',
+          persistent: true
+        }).onDismiss(() => {
+          console.log('.')
+          this.$q.notify({
+            message: 'This program may not be functional as expected',
+            caption: 'Refresh and try again',
+            color: 'red',
+            icon: 'warning'
+          })
+        })
+      }
+    },
+    // reset canvas
+    canvasReset() {
       this.$refs.SignCanvas.canvasClear();
       this.result.digit = null;
       this.result.probability = null;
-    },
-    /**
-     * 保存图片
-     */
-    saveAsImg() {
-      const img = this.$refs.SignCanvas.saveAsImg();
-      console.log(`base64 code of the image:\n${img}`);
-      alert(`image 的base64：${img}`);
-    },
-    /**
-     * 下载图片
-     */
-    downloadSignImg() {
-      this.$refs.SignCanvas.downloadSignImg();
-    },
-    /**
-     * 下载dealImage图片
-     */
-    dealImage() {
-      this.$refs.SignCanvas.dealImage();
     }
   }
 }
 </script>
 <style lang="sass">
+.main
+  display: flex
+  flex-direction: row
+  @media (max-width: $breakpoint-xs-max)
+    flex-direction: column
+
 .sign-canvas
   display: block
   margin: 20px auto
 
+.option-title
+  display: flex
+  justify-content: start
+  align-items: center
+  width: 90px
 
 .view-image
   display: block
   margin: 20px auto
 
 
-.config
-  margin: 20px auto
-
-  .ul-config
-    .li-c
-      display: flex
-      align-items: center
-      padding: 4px 10px
-
-      .item-content
-        margin-left: 10px
-
-.sign-btns
-  > button
-    margin: 2px
 </style>

@@ -20,20 +20,34 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# !!! SECRET_KEY is stored in the environment variables !!!
-SECRET_KEY = ''  # none
+"""
+Runtime environment settings:
+    DJANGO_SECRET_KEY: (str) 
+    DJANGO_DEBUG_MODE: (boolean)
+"""
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
-print("Secret key is" + str(SECRET_KEY))
-if SECRET_KEY == None:
+
+if SECRET_KEY is None:
+    # SECRET_KEY = ''  # none
     raise Exception('No Secret Key')
+else:
+    print("> Loaded secret key from environment.")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.getenv('DJANGO_DEBUG_MODE'):
+    """
+    default to false, do not give production 
+    environment with debug = True
+    """
+    DEBUG = True
+    print("> Django debug mode is True!")
+else:
+    DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]', '.vercel.app']
 
 CORS_ORIGIN_WHITELIST = ['http://localhost:8080', 'http://localhost:8088', 'http://127.0.0.1:8080',
-                         'http://127.0.0.1:8088']
+                         'http://127.0.0.1:8088', ]
 
 # Application definition
 
@@ -82,10 +96,10 @@ WSGI_APPLICATION = 'digit_recognition.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
 }
 
 # Password validation

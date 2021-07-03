@@ -1,6 +1,11 @@
+"""
+This file is trainer of MNIST datasets, which should be run
+separately. The model it generated will be used in predict.py
+for digit prediction.
+"""
 import os
 import tensorflow as tf
-from tensorflow.keras import datasets, layers, models, utils, optimizers
+from tensorflow.keras import datasets, utils, optimizers
 from model import CNN
 
 
@@ -80,12 +85,15 @@ class Train:
 
         # print eval test result
         print("Test loss: ", test_loss,
-              "\t Test accuracy: ", test_accuracy)
+              "\t Test accuracy: ", test_accuracy,
+              f" among {len(self.data.test_labels)} images."
+              )
 
         # save the entire model
         self.cnn.model.save('../saved_model/best')
 
 
+# train driver
 if __name__ == '__main__':
     app = Train()
     app.train()

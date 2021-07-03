@@ -37,6 +37,13 @@
 
     <q-page-container>
       <router-view/>
+      <q-footer bordered class="bg-white text-black row justify-center q-pa-lg-sm">
+        <div class="github-link q-ma-sm">
+          <a href="https://" target="_blank">
+            <q-icon name="fab fa-github"></q-icon>
+            Github Repo</a>
+        </div>
+      </q-footer>
     </q-page-container>
   </q-layout>
 </template>

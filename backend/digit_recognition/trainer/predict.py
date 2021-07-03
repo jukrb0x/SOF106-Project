@@ -65,23 +65,11 @@ class Predict:
         # export to instance-self
         self.img_array = x
 
-        # FIXME: remove me
-        # try:
-        #     with open("./img-2.png", "wb") as fh:
-        #         # fh.write(base64.urlsafe_b64decode(self.img_base64_path))
-        #         fh.write(img)
-        # except:
-        #     print("Exception with reading the image")
-
     def predict(self):
         x = self.img_array
         y = self.cnn.model.predict(x)
-        # FIXME
-        prob = self.cnn.model.predict_proba(x)
-        # print(self.img_base64_path)
         print(y[0])
         predict_digit = np.argmax(y[0])
         print('\tPredict digit: ', predict_digit)
         self.digit = predict_digit
-        self.probability = prob
-        print("PROB IS ", prob)
+        # self.probability = None

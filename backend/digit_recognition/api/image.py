@@ -49,8 +49,8 @@ def image_handler(request: WSGIRequest):
         # response json data
         res = json.dumps({
             'number': str(prediction.digit),
-            # FIXME: probability
-            'probability': '0'
+            # TODO: probability
+            'probability': 'not applicable'
         })
         # return the data
         return HttpResponse(res)

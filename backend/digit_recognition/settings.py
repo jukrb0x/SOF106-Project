@@ -44,10 +44,10 @@ if os.getenv('DJANGO_DEBUG_MODE'):
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]', '.vercel.app']
 
 CORS_ORIGIN_WHITELIST = ['http://localhost:8080', 'http://localhost:8088', 'http://127.0.0.1:8080',
-                         'http://127.0.0.1:8088']
+                         'http://127.0.0.1:8088', '.vercel.app']
 
 # Application definition
 

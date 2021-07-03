@@ -28,4 +28,5 @@ urlpatterns = [
                   # *(path(f'api/{api_path}', test_api) for api_path in api_paths),
                   path('api/', views.api_root_handler),
                   path('api/img/', image.image_handler),
+                  path('api/img/test/', image.image_test),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

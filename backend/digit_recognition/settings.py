@@ -44,10 +44,11 @@ if os.getenv('DJANGO_DEBUG_MODE'):
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]', '.vercel.app']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]', '.vercel.app', '.herokuapp.com']
 
 CORS_ORIGIN_WHITELIST = ['http://localhost:8080', 'http://localhost:8088', 'http://127.0.0.1:8080',
-                         'http://127.0.0.1:8088', 'https://sof-106-project-frontend.vercel.app']
+                         'http://127.0.0.1:8088', 'https://sof-106-project-frontend.vercel.app',
+                         'https://sof106-project-backend.herokuapp.com']
 
 # Application definition
 

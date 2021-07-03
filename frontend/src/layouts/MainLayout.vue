@@ -72,12 +72,20 @@ import EssentialLink from "components/EssentialLink.vue";
 export default defineComponent({
   name: 'MainLayout',
   components: {EssentialLink},
+  mounted() {
+    this.leftDrawerOpen = this.drawerOpen()
+  },
+  methods: {
+    drawerOpen() {
+      return !Screen.lt.md
+    }
+  },
   setup() {
-    // const leftDrawerOpen = ref(false);
-    const leftDrawerOpen = computed(() => {
-        return !Screen.lt.md
-      })
-    ;
+    const leftDrawerOpen = ref(false);
+    // computed var is read-only
+    // const leftDrawerOpen = computed(() => {
+    //     return !Screen.lt.md
+    //   });
     const name = ref('');
     const team_name = ref('');
     name.value = "Digit Recognition";

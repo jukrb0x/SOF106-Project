@@ -10,7 +10,9 @@
           v-model="imgValue"
         />
         <!-- <img v-if="imgValue" class="view-image" :src="imgValue" width="150" height="150" alt="result">-->
-        <p id="result">Number: {{ result.digit }}</p>
+        <p v-if="!result.digit">Please write the number above.</p>
+        <p v-if="result.digit" id="result">Number: {{ result.digit }}
+        </p>
         <!--        <p id="probability">Probability: {{ result.probability }}</p>-->
       </div>
       <div class="q-px-lg q-pa-lg col content-center justify-sm-start">

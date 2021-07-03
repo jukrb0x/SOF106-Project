@@ -2,8 +2,8 @@
   <div>
     <p>{{ title }}</p>
     <ul>
-      <li v-for="todo in todos" :key="todo.id" @click="increment">
-        {{ todo.id }} - {{ todo.content }}
+      <li v-for="todo in todos" :key="todo.caption" @click="increment">
+        {{ todo.caption }} - {{ todo.content }}
       </li>
     </ul>
     <p>Count: {{ todoCount }} / {{ meta.totalCount }}</p>
@@ -36,7 +36,7 @@ function useDisplayTodo(todos: Ref<Todo[]>) {
 export default defineComponent({
   name: 'CompositionComponent',
   props: {
-    title: {
+    name: {
       type: String,
       required: true
     },

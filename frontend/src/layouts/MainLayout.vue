@@ -29,10 +29,25 @@
           header
           class="text-grey-8"
         >
-          Essential Links
+          Group members
         </q-item-label>
-
+        <essential-link caption="SWE1909503" name="Zhang Jinbiao"></essential-link>
+        <essential-link caption="SWE1909484" name="Liu Yicen"></essential-link>
+        <essential-link caption="DMT1909680" name="Chee Ka Yen"></essential-link>
+        <essential-link caption="SWE1909765" name="Teon Wei Jet"></essential-link>
       </q-list>
+      <q-item-label
+        header
+        class="text-grey-8"
+      >
+        Credits
+      </q-item-label>
+      <essential-link name="Vue.js" caption="Javascript framework"></essential-link>
+      <essential-link name="Quasar Framework" caption="Frontend UI scaffold"></essential-link>
+      <essential-link name="Axios.js" caption="Promise based HTTP client"></essential-link>
+      <essential-link name="Django Framework" caption="Backend server framework"></essential-link>
+      <essential-link name="vue-sign-canvas" caption="The drawing canvas component"
+                      link="https://github.com/langyuxiansheng/vue-sign-canvas"></essential-link>
     </q-drawer>
 
     <q-page-container>
@@ -50,13 +65,19 @@
 
 <script lang="ts">
 
-import {defineComponent, ref} from '@vue/composition-api';
+import { Screen } from 'quasar'
+import { computed, defineComponent, ref } from '@vue/composition-api';
+import EssentialLink from "components/EssentialLink.vue";
 
 export default defineComponent({
   name: 'MainLayout',
-  components: {},
+  components: {EssentialLink},
   setup() {
-    const leftDrawerOpen = ref(false);
+    // const leftDrawerOpen = ref(false);
+    const leftDrawerOpen = computed(() => {
+        return !Screen.lt.md
+      })
+    ;
     const name = ref('');
     const team_name = ref('');
     name.value = "Digit Recognition";
@@ -65,3 +86,16 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="sass">
+.github-link
+  a
+    text-decoration: none
+    color: #8e8e8e
+
+  a:hover
+    transition: ease 0.2s
+    color: #1D1D1D
+
+
+</style>

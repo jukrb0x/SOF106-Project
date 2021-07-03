@@ -2,18 +2,17 @@
   <q-item
     clickable
     tag="a"
-    target="_blank"
     :href="link"
   >
     <q-item-section
       v-if="icon"
       avatar
     >
-      <q-icon :name="icon" />
+      <q-icon :name="icon"/>
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
+      <q-item-label>{{ name }}</q-item-label>
       <q-item-label caption>
         {{ caption }}
       </q-item-label>
@@ -27,7 +26,7 @@ import { defineComponent } from '@vue/composition-api';
 export default defineComponent({
   name: 'EssentialLink',
   props: {
-    title: {
+    name: {
       type: String,
       required: true
     },

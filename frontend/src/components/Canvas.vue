@@ -16,7 +16,7 @@
         <!--        <p id="probability">Probability: {{ result.probability }}</p>-->
       </div>
       <div class="q-px-lg q-pa-lg col content-center justify-sm-start">
-        <div class="row flex-center">
+        <div class="row content-center">
           <span class="option-title">Brush size:</span>
           <div class="q-gutter-sm">
             <q-input
@@ -26,7 +26,7 @@
             ></q-input>
           </div>
         </div>
-        <div class="row">
+        <div class="row content-center">
           <span class="option-title">High DPI:</span>
           <div class="q-gutter-sm">
             <q-toggle :label="`${dprLabel}`" v-model="options.isDpr"/>
@@ -36,12 +36,21 @@
           <span class="option-title">Brush color:</span>
           <input type="color" class="q-ml-sm" v-model="options.writeColor"/>
         </div>
-        <div class="row q-my-lg">
+        <div class="row content-center">
           <q-btn color="primary" id="clear" @click="canvasReset()">Clear</q-btn>
         </div>
-        <div class="row content-center" style="height: 40px">
+        <div class="row content-center q-py-lg">
+          <span class="option-title">Local server:</span>
+          <q-toggle :label="`${isLocalLabel}`" v-model="isLocal"/>
+        </div>
+        <div v-if="isLocal" class="row content-center" style="height: 40px">
           <span class="option-title">Backend port:</span>
           <q-input name="brush-size" v-model="localPort" dense></q-input>
+        </div>
+        <div v-if="!isLocal" class="row content-center" style="height: 40px">
+          <span class="option-title q-mr-sm" style="width: auto">Host:</span>
+          <q-input name="brush-size" v-model="host" dense></q-input>
+          <q-btn color="green" class="q-mx-sm" label="connect" @click="connectTest(networkPopup)" dense></q-btn>
         </div>
         <!--        <div>connection status</div>-->
       </div>
@@ -56,7 +65,9 @@ export default {
   components: {SignCanvas},
   data() {
     return {
+      isLocal: true,
       localPort: "8000",
+      host: "http://",
       imgValue: null, // base64 of the image
       result: {
         digit: null,
@@ -86,11 +97,22 @@ export default {
     };
   },
   computed: {
-    localServer: function () {
-      return `http://localhost:${ this.localPort }/`;
+    HostServer: function () {
+      if (this.isLocal) {
+        return `http://localhost:${ this.localPort }/`;
+      } else {
+        return `${ this.host }/`;
+      }
     },
     dprLabel: function () {
       if (this.options.isDpr) {
+        return "ON";
+      } else {
+        return "OFF";
+      }
+    },
+    isLocalLabel: function () {
+      if (this.isLocal) {
         return "ON";
       } else {
         return "OFF";
@@ -105,7 +127,7 @@ export default {
         };
 
         this.$axios
-          .post(this.localServer + "api/img/", FormData)
+          .post(this.HostServer + "api/img/", FormData)
           .then(response => {
             this.result.digit = response.data.number;
             this.result.probability = response.data.probability;
@@ -113,6 +135,21 @@ export default {
           .catch(function (error) {
             console.log("(Reach backend) " + error);
           });
+      }
+    },
+    isLocal: function (newValue) {
+      if (newValue) {
+        this.connectTest(this.networkPopup);
+      } else {
+        if (this.host === 'http://' || this.host === 'https://' || this.host === '' || !this.host) {
+          this.$q.notify({
+            message: "If you have a cloud deployment...",
+            caption: "Please fill up the complete host server address",
+            color: "yellow",
+            textColor: 'black',
+            icon: "warning"
+          })
+        }
       }
     },
     localPort: debounce(function () {
@@ -128,7 +165,7 @@ export default {
     // backend server test
     connectTest(callback) {
       this.$axios
-        .get(this.localServer + "api/")
+        .get(this.HostServer + "api/")
         .then(response => {
           let ret = response.status;
           if (callback) {
@@ -137,9 +174,8 @@ export default {
         })
         .catch(error => {
           console.log(error);
-          let ret = error;
           if (callback) {
-            callback(ret);
+            callback(error);
           }
         });
     },
@@ -156,10 +192,10 @@ export default {
       } else {
         this.$q
           .dialog({
-            name: "Cannot connect Backend Server",
+            title: "Cannot connect to Backend Server",
             message: `Error message:\n ${ status.message }`,
             position: "bottom",
-            persistent: true
+            persistent: false
           })
           .onDismiss(() => {
             console.log(".");

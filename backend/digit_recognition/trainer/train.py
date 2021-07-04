@@ -24,8 +24,7 @@ class DataSource:
         train_images = utils.normalize(train_images, axis=1)
         test_images = utils.normalize(test_images, axis=1)
 
-        # FIXME: what is this for?
-        # reshape the image abaabaabaaba
+        # reshape the image
         train_images = train_images.reshape((60000, 28, 28, 1)).astype('float') / 255
         test_images = test_images.reshape((10000, 28, 28, 1)).astype('float') / 255
         train_labels = utils.to_categorical(train_labels)

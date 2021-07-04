@@ -48,10 +48,33 @@
       <essential-link name="Django Framework" caption="Backend server framework"></essential-link>
       <essential-link name="vue-sign-canvas" caption="The drawing canvas component"
                       link="https://github.com/langyuxiansheng/vue-sign-canvas"></essential-link>
+      <essential-link name="Tensorflow" caption="E2E Machine Learning Platform"
+                      link=""></essential-link>
+      <essential-link name="Keras" caption="Python Deep Learning APIs"
+                      link=""></essential-link>
     </q-drawer>
 
     <q-page-container>
       <router-view/>
+      <!--  Welcome Dialog  -->
+      <q-dialog v-model="welcomeDialog">
+        <q-card>
+          <q-toolbar>
+            <q-avatar>
+              <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg">
+            </q-avatar>
+
+            <q-toolbar-title><span class="text-weight-bold">SOF106</span> Project</q-toolbar-title>
+
+            <q-btn flat round dense icon="close" v-close-popup/>
+          </q-toolbar>
+
+          <q-card-section>
+            Welcome to the SOF106 PAI Project - Handwritten digit recognition
+          </q-card-section>
+        </q-card>
+      </q-dialog>
+      <!--  footer  -->
       <q-footer bordered class="bg-white text-black row justify-center q-pa-lg-sm">
         <div class="github-link q-ma-sm">
           <a href="https://" target="_blank">
@@ -81,6 +104,7 @@ export default defineComponent({
     }
   },
   setup() {
+    const welcomeDialog = ref(true);
     const leftDrawerOpen = ref(false);
     // computed var is read-only
     // const leftDrawerOpen = computed(() => {
@@ -90,7 +114,7 @@ export default defineComponent({
     const team_name = ref('');
     name.value = "Digit Recognition";
     team_name.value = "PAI Group 2-11";
-    return {leftDrawerOpen, name, team_name}
+    return {welcomeDialog, leftDrawerOpen, name, team_name}
   }
 });
 </script>

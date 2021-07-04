@@ -26,7 +26,6 @@ decorator==5.0.7
 Django==3.1.2
 django-cors-headers==3.5.0
 django-filter==2.4.0
-Flask==1.1.2
 future==0.18.2
 gast==0.4.0
 graphene==2.1.8

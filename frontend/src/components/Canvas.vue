@@ -10,7 +10,7 @@
           v-model="imgValue"
         />
         <!-- <img v-if="imgValue" class="view-image" :src="imgValue" width="150" height="150" alt="result">-->
-        <p v-if="!result.digit">Please write the number above.</p>
+        <p v-if="!result.digit">Please write a number above.</p>
         <p v-if="result.digit" id="result">Number: {{ result.digit }}
         </p>
         <!--        <p id="probability">Probability: {{ result.probability }}</p>-->
@@ -63,7 +63,7 @@ import SignCanvas from "sign-canvas";
 import { debounce } from "quasar";
 
 export default {
-  components: {SignCanvas},
+  components: { SignCanvas },
   data() {
     return {
       isLocal: true,

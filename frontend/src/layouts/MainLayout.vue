@@ -89,6 +89,8 @@ export default defineComponent({
     }
   },
   setup() {
+    const githubRepo = ref('');
+    githubRepo.value = "https://github.com/jukrb0x/SOF106-Project";
     const welcomeDialog = ref(true);
     const leftDrawerOpen = ref(false);
     // computed var is read-only
@@ -99,7 +101,7 @@ export default defineComponent({
     const team_name = ref('');
     name.value = "Digit Recognition";
     team_name.value = "PAI Group 2-11";
-    return { welcomeDialog, leftDrawerOpen, name, team_name }
+    return { welcomeDialog, leftDrawerOpen, name, team_name, githubRepo }
   }
 });
 </script>

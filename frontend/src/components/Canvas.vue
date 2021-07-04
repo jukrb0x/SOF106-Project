@@ -156,10 +156,10 @@ export default {
       } else {
         this.$q
           .dialog({
-            name: "Cannot connect Backend Server",
+            title: "Cannot connect to Backend Server",
             message: `Error message:\n ${ status.message }`,
             position: "bottom",
-            persistent: true
+            persistent: false
           })
           .onDismiss(() => {
             console.log(".");

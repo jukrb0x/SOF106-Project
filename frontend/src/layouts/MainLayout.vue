@@ -15,7 +15,7 @@
           {{ name }}
         </q-toolbar-title>
 
-        <div>{{ team_name }}</div>
+        <div @click="welcomeDialog=true">{{ team_name }}</div>
       </q-toolbar>
     </q-header>
 
@@ -48,13 +48,20 @@
       <essential-link name="Django Framework" caption="Backend server framework"></essential-link>
       <essential-link name="vue-sign-canvas" caption="The drawing canvas component"
                       link="https://github.com/langyuxiansheng/vue-sign-canvas"></essential-link>
+      <essential-link name="Tensorflow" caption="E2E Machine Learning Platform"
+                      link=""></essential-link>
+      <essential-link name="Keras" caption="Python Deep Learning APIs"
+                      link=""></essential-link>
     </q-drawer>
 
     <q-page-container>
       <router-view/>
+      <!--  Welcome Dialog  -->
+      <WelcomeDialog :welcome-dialog-state="welcomeDialog"/>
+      <!--  footer  -->
       <q-footer bordered class="bg-white text-black row justify-center q-pa-lg-sm">
         <div class="github-link q-ma-sm">
-          <a href="https://" target="_blank">
+          <a :href="githubRepo" target="_blank">
             <q-icon name="fab fa-github"></q-icon>
             Github Repo</a>
         </div>
@@ -68,10 +75,11 @@
 import { Screen } from 'quasar'
 import { computed, defineComponent, ref } from '@vue/composition-api';
 import EssentialLink from "components/EssentialLink.vue";
+import WelcomeDialog from "components/WelcomeDialog.vue";
 
 export default defineComponent({
   name: 'MainLayout',
-  components: {EssentialLink},
+  components: { WelcomeDialog, EssentialLink },
   mounted() {
     this.leftDrawerOpen = this.drawerOpen()
   },
@@ -81,6 +89,7 @@ export default defineComponent({
     }
   },
   setup() {
+    const welcomeDialog = ref(true);
     const leftDrawerOpen = ref(false);
     // computed var is read-only
     // const leftDrawerOpen = computed(() => {
@@ -90,12 +99,20 @@ export default defineComponent({
     const team_name = ref('');
     name.value = "Digit Recognition";
     team_name.value = "PAI Group 2-11";
-    return {leftDrawerOpen, name, team_name}
+    return { welcomeDialog, leftDrawerOpen, name, team_name }
   }
 });
 </script>
 
 <style lang="sass">
+a
+  text-decoration: none
+  color: #4e4c4c
+
+a:hover
+  transition: ease 0.2s
+  color: #000000
+
 .github-link
   a
     text-decoration: none

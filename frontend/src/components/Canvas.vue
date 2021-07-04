@@ -55,6 +55,7 @@
         <!--        <div>connection status</div>-->
       </div>
     </div>
+
   </div>
 </template>
 <script>
@@ -99,8 +100,10 @@ export default {
   computed: {
     HostServer: function () {
       if (this.isLocal) {
+        console.log(this.host)
         return `http://localhost:${ this.localPort }/`;
       } else {
+        console.log(this.host)
         return `${ this.host }/`;
       }
     },

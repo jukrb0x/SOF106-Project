@@ -137,6 +137,7 @@ export default {
           })
           .catch(function (error) {
             console.log("(Reach backend) " + error);
+            //  figure out a way to callback networkPopup
           });
       }
     },

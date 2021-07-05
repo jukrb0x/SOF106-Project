@@ -28,10 +28,11 @@ Runtime environment settings:
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 if SECRET_KEY is None:
-    # SECRET_KEY = ''  # none
-    raise Exception('No Secret Key')
+    SECRET_KEY = 'none'  # none
+    print("> Secret Key is set to None.")
+# raise Exception('No Secret Key')
 else:
-    print("> Loaded secret key from environment.")
+    print("> Loaded Secret Key from environment.")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.getenv('DJANGO_DEBUG_MODE'):

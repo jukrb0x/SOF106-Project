@@ -7,14 +7,11 @@ Topic: `Handwritten digit recognition`
 
 PC (big screen):
 
-<a href="screenshot/pc.png" target="_blank"><img src="screenshot/pc.png" alt="pc" width="50%;" /></a>
+<img src="screenshot/pc.png" alt="pc" width="50%;" />
 
 Mobile:
 
 <img src="screenshot/mobile.png" alt="mobile" width="20%;" />
-
-
-
 
 
 ## Get started

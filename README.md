@@ -7,11 +7,11 @@ Topic: `Handwritten digit recognition`
 
 PC (big screen):
 
-<img src="screenshot/pc.png" alt="pc" style="zoom:50%;" />
+<a href="screenshot/pc.png" target="_blank"><img src="screenshot/pc.png" alt="pc" width="50%;" /></a>
 
 Mobile:
 
-<img src="screenshot/mobile.png" alt="mobile" style="zoom:20%;" />
+<img src="screenshot/mobile.png" alt="mobile" width="20%;" />
 
 
 
@@ -72,11 +72,11 @@ Check the outputs, It will start the backend server at `http://127.0.0.1:8000/` 
 
 If you correctly configure as mentioned above, you will see `Good to go` prompt when you open the frontend server in your browser.
 
-<img src="screenshot/good-to-go.png" alt="good to go" style="zoom:50%;" />
+<img src="screenshot/good-to-go.png" alt="good to go" width="50%;" />
 
 Write the digit on the pink-colored canvas, you will get the result shortly.
 
-<img src="screenshot/9.png" alt="9" style="zoom:50%;" />
+<img src="screenshot/9.png" alt="9" width="50%;" />
 
 
 
@@ -86,7 +86,7 @@ If you have a different local server port than `8000` , set it on the interface
 
 If you have a cloud server for backend, toggle the Local server OFF and type the **full address** for your server and click CONNECT button, e.g. `http://your.cloud-server.com:8000`
 
-<img src="screenshot/cloud-deployment.png" alt="cloud deployment" style="zoom:50%;" />
+<img src="screenshot/cloud-deployment.png" alt="cloud deployment" width="50%;" />
 
 ### Options
 

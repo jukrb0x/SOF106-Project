@@ -77,7 +77,7 @@ Write the digit on the pink-colored canvas, you will get the result shortly.
 
 
 
-If you have a different local server port than `8000` , set it on the interface.
+If you have a different local server port than `8000` , set it on the interface.
 
 ### Use cloud backend
 

@@ -14,9 +14,10 @@
             <p class="text-subtitle2">Presented by Group 2-11</p>
             Welcome to the SOF106 PAI Project - <b>Handwritten digit recognition</b>
             <div class="q-pt-sm">
-              This is the frontend server deployed on Vercel, due to the <a
-              href="http://devcenter.heroku.com/articles/slug-size" target="_blank">slug-size</a> of backend,<br>
-              we did not deploy it on a cloud server. You can download the backend source code (Python) and start the
+              This is the frontend server deployed on Vercel.
+              We did not deploy the backend on a cloud server due to the <a
+              href="http://devcenter.heroku.com/articles/slug-size" target="_blank">slug-size</a> limitation. You can
+              download the backend source code (Python) and start the
               server on your machine, it will open the port
               <pre style="display: inline">8000</pre>
               by default. Or you can deploy it on a cloud server and put the host address in the settings, which you

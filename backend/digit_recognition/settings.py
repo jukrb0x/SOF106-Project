@@ -55,7 +55,7 @@ def allow_all_hosts():
         return
 
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]', '.vercel.app', '.herokuapp.com',
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]', '.vercel.app', '.herokuapp.com', 'compute.amazonaws.com'
                  # allow_all_hosts()  # NOT SAFE
                  ]
 

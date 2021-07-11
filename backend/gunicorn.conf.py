@@ -1,3 +1,5 @@
+# run with
+# gunicorn -c gunicorn.conf.py digit_recognition.wsgi:application
 import sys
 import os
 import logging
@@ -57,11 +59,11 @@ p          process ID
 accesslog = os.path.join(LOG_DIR, 'gunicorn_access.log')
 errorlog = os.path.join(LOG_DIR, 'gunicorn_error.log')
 # pid
-pidfile = os.path.join(LOG_DIR, 'gunicorn_error.pid')
+pidfile = os.path.join(LOG_DIR, 'gunicorn.pid')
 
 # std out
 accesslog = "-"
 errorlog = "-"
 
 # process name
-proc_name = 'hippiezhou_fun.pid'
+proc_name = 'backend.pid'

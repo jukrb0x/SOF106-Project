@@ -107,10 +107,10 @@ export default {
   computed: {
     HostServer: function () {
       if (this.isLocal) {
-        console.log(this.host)
+        console.log("Backend Server: ", this.host)
         return `http://localhost:${ this.localPort }/`;
       } else {
-        console.log(this.host)
+        console.log("Backend Server: ", this.host)
         return `${ this.host }/`;
       }
     },
@@ -229,8 +229,6 @@ export default {
       this.result.digit = null;
       // this.result.probability = null;
       this.isBrew = false;
-      console.log("brew? ", this.isBrew)
-      console.log("result? ", this.result.digit)
     }
   }
 };

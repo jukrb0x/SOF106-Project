@@ -35,7 +35,7 @@ else:
     print("> Loaded Secret Key from environment.")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if os.getenv('DJANGO_DEBUG_MODE').lower() == "true":
+if os.getenv('DJANGO_DEBUG_MODE') and os.getenv('DJANGO_DEBUG_MODE').lower() == "true":
     """
     default to false, do not give production 
     environment with debug = True

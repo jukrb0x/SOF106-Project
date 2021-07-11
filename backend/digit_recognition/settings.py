@@ -56,7 +56,7 @@ def allow_all_hosts():
 
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]', '.vercel.app', '.herokuapp.com',
-                 '18.163.238.216'  # AWS
+                 '18.163.238.216',  # AWS
                  'ai.wh0.is'  # my domain
                  # allow_all_hosts()  # NOT SAFE
                  ]

@@ -57,13 +57,15 @@ def allow_all_hosts():
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]', '.vercel.app', '.herokuapp.com',
                  '18.163.238.216'  # AWS
+                 'ai.wh0.is'  # my domain
                  # allow_all_hosts()  # NOT SAFE
                  ]
 
 CORS_ORIGIN_WHITELIST = ['http://localhost:8080', 'http://localhost:8088', 'http://127.0.0.1:8080',
                          'http://127.0.0.1:8088', 'https://sof-106-project-frontend.vercel.app',
                          'https://sof106-project-backend.herokuapp.com',
-                         'http://18.163.238.216'  # AWS
+                         'http://18.163.238.216',  # AWS
+                         'http://ai.wh0.is/', 'https://ai.wh0.is/'  # my domain
                          ]
 
 # Application definition

@@ -35,26 +35,29 @@
             <q-toggle :label="`${dprLabel}`" v-model="options.isDpr"/>
           </div>
         </div>
-        <div class="row content-center" style="height: 40px">
-          <span class="option-title">Brush color:</span>
-          <input type="color" class="q-ml-sm" v-model="options.writeColor"/>
-        </div>
-        <div class="row content-center">
-          <q-btn color="primary" id="clear" @click="canvasReset">Clear</q-btn>
+        <div class="flex justify-between">
+          <div class="row content-center" style="height: 40px">
+            <span class="option-title">Brush color:</span>
+            <input type="color" class="q-ml-sm" v-model="options.writeColor"/>
+          </div>
+
+          <div class="row content-center">
+            <q-btn color="primary" id="clear" @click="canvasReset">Clear</q-btn>
+          </div>
         </div>
         <div class="row content-center q-py-lg">
           <span class="option-title">Local server:</span>
           <q-toggle :label="`${isLocalLabel}`" v-model="isLocal"/>
         </div>
         <div v-if="isLocal" class="row content-center" style="height: 40px">
-          <span class="option-title">Backend port:</span>
-          <q-input name="brush-size" style="max-width: 70px" v-model="localPort" dense></q-input>
+          <span class="option-title q-mr-sm" style="max-width: 40px">Port:</span>
+          <q-input name="brush-size" style="max-width: 170px" v-model="localPort" dense></q-input>
           <q-btn color="green" class="q-mx-sm" label="connect" @click="connectTest(networkPopup,networkPopup)"
                  dense></q-btn>
         </div>
         <div v-if="!isLocal" class="row content-center" style="height: 40px">
-          <span class="option-title q-mr-sm" style="width: auto">Host:</span>
-          <q-input name="brush-size" v-model="host" dense></q-input>
+          <span class="option-title q-mr-sm" style="max-width: 40px">Host:</span>
+          <q-input name="host-server" v-model="host" style="max-width: 170px" dense></q-input>
           <q-btn color="green" class="q-mx-sm" label="connect" @click="connectTest(networkPopup,networkPopup)"
                  dense></q-btn>
         </div>

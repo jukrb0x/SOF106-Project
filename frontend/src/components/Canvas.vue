@@ -50,7 +50,8 @@
         <div v-if="!isLocal" class="row content-center" style="height: 40px">
           <span class="option-title q-mr-sm" style="width: auto">Host:</span>
           <q-input name="brush-size" v-model="host" dense></q-input>
-          <q-btn color="green" class="q-mx-sm" label="connect" @click="connectTest(networkPopup)" dense></q-btn>
+          <q-btn color="green" class="q-mx-sm" label="connect" @click="connectTest(networkPopup,networkPopup)"
+                 dense></q-btn>
         </div>
         <!--        <div>connection status</div>-->
       </div>
@@ -66,9 +67,9 @@ export default {
   components: { SignCanvas },
   data() {
     return {
-      isLocal: true,
+      isLocal: false,
       localPort: "8000",
-      host: "http://",
+      host: "https://ai.wh0.is",
       imgValue: null, // base64 of the image
       result: {
         digit: null,
@@ -157,17 +158,16 @@ export default {
       }
     },
     localPort: debounce(function () {
-      this.connectTest(this.networkPopup);
+      this.connectTest(this.networkPopup, this.networkPopup);
     }, 1000)
   },
   mounted() {
     // Test backend server connection
-    this.connectTest(this.networkPopup);
-    // this.networkPopup(this.connectTest());
+    this.connectTest(this.networkPopup, this.preBackendTest);
   },
   methods: {
     // backend server test
-    connectTest(callback) {
+    connectTest(callback, errCallback) {
       this.$axios
         .get(this.HostServer + "api/")
         .then(response => {
@@ -179,12 +179,13 @@ export default {
         .catch(error => {
           console.log(error);
           if (callback) {
-            callback(error);
+            errCallback(error);
           }
         });
     },
     // network status popup
     networkPopup(status) {
+      // FIXME: I dealt with the error in the same function, which is improper.
       console.log("stat ", status);
       if (status === 200) {
         this.$q.notify({
@@ -211,6 +212,12 @@ export default {
             });
           });
       }
+    },
+    // mounted callback (pre-deployed server test)
+    preBackendTest() {
+      // if cloud server could not be connected
+      this.host = "https://";
+      this.isLocal = true;
     },
     // reset canvas
     canvasReset() {

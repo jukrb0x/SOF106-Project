@@ -10,9 +10,12 @@
           v-model="imgValue"
         />
         <!-- <img v-if="imgValue" class="view-image" :src="imgValue" width="150" height="150" alt="result">-->
-        <p v-if="!result.digit">Please write a number above.</p>
-        <p v-if="result.digit" id="result">Number: {{ result.digit }}
-        </p>
+        <div class="results flex flex-center">
+
+          <span v-if="isBrew">Brewing...</span>
+          <span v-else-if="result.digit" id="result">Number: {{ result.digit }}</span>
+          <span v-else>Please write a number above.</span>
+        </div>
         <!--        <p id="probability">Probability: {{ result.probability }}</p>-->
       </div>
       <div class="q-px-lg q-pa-lg col content-center justify-sm-start">
@@ -37,7 +40,7 @@
           <input type="color" class="q-ml-sm" v-model="options.writeColor"/>
         </div>
         <div class="row content-center">
-          <q-btn color="primary" id="clear" @click="canvasReset()">Clear</q-btn>
+          <q-btn color="primary" id="clear" @click="canvasReset">Clear</q-btn>
         </div>
         <div class="row content-center q-py-lg">
           <span class="option-title">Local server:</span>
@@ -45,7 +48,9 @@
         </div>
         <div v-if="isLocal" class="row content-center" style="height: 40px">
           <span class="option-title">Backend port:</span>
-          <q-input name="brush-size" v-model="localPort" dense></q-input>
+          <q-input name="brush-size" style="max-width: 70px" v-model="localPort" dense></q-input>
+          <q-btn color="green" class="q-mx-sm" label="connect" @click="connectTest(networkPopup,networkPopup)"
+                 dense></q-btn>
         </div>
         <div v-if="!isLocal" class="row content-center" style="height: 40px">
           <span class="option-title q-mr-sm" style="width: auto">Host:</span>
@@ -53,7 +58,7 @@
           <q-btn color="green" class="q-mx-sm" label="connect" @click="connectTest(networkPopup,networkPopup)"
                  dense></q-btn>
         </div>
-        <!--        <div>connection status</div>-->
+
       </div>
     </div>
 
@@ -69,12 +74,13 @@ export default {
     return {
       isLocal: false,
       localPort: "8000",
-      host: "https://ai.wh0.is",
+      host: "https://",
       imgValue: null, // base64 of the image
       result: {
         digit: null,
         probability: null
       },
+      isBrew: false,
       options: {
         isFullScreen: false, ////是否全屏手写 [Boolean] 可选
         isFullCover: false, //是否全屏模式下覆盖所有的元素 [Boolean] 可选 (这个有意思，可以研究一下怎么实现的)
@@ -109,23 +115,17 @@ export default {
       }
     },
     dprLabel: function () {
-      if (this.options.isDpr) {
-        return "ON";
-      } else {
-        return "OFF";
-      }
+      return this.options.isDpr ? "ON" : "OFF";
     },
     isLocalLabel: function () {
-      if (this.isLocal) {
-        return "ON";
-      } else {
-        return "OFF";
-      }
+      return this.isLocal ? "ON" : "OFF";
     }
   },
   watch: {
     imgValue: function (newValue) {
       if (newValue) {
+        this.result.digit = null;
+        this.isBrew = true;
         let FormData = {
           imgValue: newValue.replace("data:image/png;base64,", "")
         };
@@ -139,12 +139,15 @@ export default {
           .catch(function (error) {
             console.log("(Reach backend) " + error);
             //  figure out a way to callback networkPopup
-          });
+          }).finally(() => {
+            this.isBrew = false
+          }
+        );
       }
     },
     isLocal: function (newValue) {
       if (newValue) {
-        this.connectTest(this.networkPopup);
+        this.connectTest(this.networkPopup, this.networkPopup);
       } else {
         if (this.host === 'http://' || this.host === 'https://' || this.host === '' || !this.host) {
           this.$q.notify({
@@ -157,13 +160,15 @@ export default {
         }
       }
     },
-    localPort: debounce(function () {
-      this.connectTest(this.networkPopup, this.networkPopup);
-    }, 1000)
+    // localPort: debounce(function () {
+    //   this.connectTest(this.networkPopup, this.networkPopup);
+    // }, 1000)
   },
   mounted() {
-    // Test backend server connection
-    this.connectTest(this.networkPopup, this.preBackendTest);
+    // Test pre-deployed backend server connection
+    // pre-deployed backend server
+    this.host = 'https://ai.wh0.is';
+    this.connectTest(this.networkPopup, this.preBackendFailed);
   },
   methods: {
     // backend server test
@@ -186,7 +191,7 @@ export default {
     // network status popup
     networkPopup(status) {
       // FIXME: I dealt with the error in the same function, which is improper.
-      console.log("stat ", status);
+      // console.log("stat ", status);
       if (status === 200) {
         this.$q.notify({
           message: "Good to go",
@@ -203,7 +208,6 @@ export default {
             persistent: false
           })
           .onDismiss(() => {
-            console.log(".");
             this.$q.notify({
               message: "This program may not be functional as expected",
               caption: "Refresh and try again",
@@ -213,8 +217,8 @@ export default {
           });
       }
     },
-    // mounted callback (pre-deployed server test)
-    preBackendTest() {
+    // mounted test err callback (pre-deployed server test)
+    preBackendFailed() {
       // if cloud server could not be connected
       this.host = "https://";
       this.isLocal = true;
@@ -223,7 +227,10 @@ export default {
     canvasReset() {
       this.$refs.SignCanvas.canvasClear();
       this.result.digit = null;
-      this.result.probability = null;
+      // this.result.probability = null;
+      this.isBrew = false;
+      console.log("brew? ", this.isBrew)
+      console.log("result? ", this.result.digit)
     }
   }
 };

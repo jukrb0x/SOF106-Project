@@ -35,7 +35,7 @@ else:
     print("> Loaded Secret Key from environment.")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if os.getenv('DJANGO_DEBUG_MODE'):
+if os.getenv('DJANGO_DEBUG_MODE') and os.getenv('DJANGO_DEBUG_MODE').lower() == "true":
     """
     default to false, do not give production 
     environment with debug = True
@@ -55,7 +55,7 @@ def allow_all_hosts():
         return
 
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]', '.vercel.app', '.herokuapp.com',
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]', '.vercel.app', '.herokuapp.com', 'compute.amazonaws.com'
                  # allow_all_hosts()  # NOT SAFE
                  ]
 

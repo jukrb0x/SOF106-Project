@@ -9,6 +9,8 @@ from PIL import Image
 from django.core.handlers.wsgi import WSGIRequest
 from django.shortcuts import HttpResponse
 from numpy import ndarray
+
+from ..settings import DEBUG
 from ..trainer import predict
 
 
@@ -29,15 +31,16 @@ def image_handler(request: WSGIRequest):
             }
     """
     if request.method == 'POST':
-        # for debugging usage
-        print(request)
-        print(
-            "\nrequest.path: ", request.path,
-            "\nrequest.body: ", request.body,
-            "\nrequest.META: ", request.META,
-            "\nrequest.path_info: ", request.path_info,
-            "\nrequest.COOKIES: ", request.COOKIES,
-        )
+        if DEBUG:
+            # for debugging usage
+            print(request)
+            print(
+                "\nrequest.path: ", request.path,
+                "\nrequest.body: ", request.body,
+                "\nrequest.META: ", request.META,
+                "\nrequest.path_info: ", request.path_info,
+                "\nrequest.COOKIES: ", request.COOKIES,
+            )
 
         # load requests to json dict
         req = json.loads(request.body, encoding='utf-8')
@@ -56,14 +59,15 @@ def image_handler(request: WSGIRequest):
         return HttpResponse(res)
     if request.method == 'GET':
         # for debugging usage
-        print(request)
-        print(
-            "\nrequest.path: ", request.path,
-            "\nrequest.body: ", request.body,
-            "\nrequest.META: ", request.META,
-            "\nrequest.path_info: ", request.path_info,
-            "\nrequest.COOKIES: ", request.COOKIES,
-        )
+        if DEBUG:
+            print(request)
+            print(
+                "\nrequest.path: ", request.path,
+                "\nrequest.body: ", request.body,
+                "\nrequest.META: ", request.META,
+                "\nrequest.path_info: ", request.path_info,
+                "\nrequest.COOKIES: ", request.COOKIES,
+            )
         # do nothing here
         return HttpResponse("AAh Oh.. seems you get the wrong place!")
 

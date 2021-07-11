@@ -107,11 +107,15 @@ export default {
   computed: {
     HostServer: function () {
       if (this.isLocal) {
-        console.log("Backend Server: ", this.host)
-        return `http://localhost:${ this.localPort }/`;
+        let ret;
+        ret = `http://localhost:${ this.localPort }/`
+        console.log("Backend Server: ", ret)
+        return ret;
       } else {
-        console.log("Backend Server: ", this.host)
-        return `${ this.host }/`;
+        let ret;
+        ret = `${ this.host }/`
+        console.log("Backend Server: ", ret)
+        return ret;
       }
     },
     dprLabel: function () {

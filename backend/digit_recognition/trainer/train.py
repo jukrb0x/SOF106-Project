@@ -46,7 +46,7 @@ class Train:
 
     def train(self):
         # training batch size
-        batch_size = 128
+        batch_size = 64
         # checkpoint save path
         checkpoint_path = "../checkpoint/training-cp{epoch:04d}.ckpt"
         checkpoint_dir = os.path.dirname(checkpoint_path)

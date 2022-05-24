@@ -7,7 +7,7 @@ chardet==4.0.0
 Django==3.2.13
 django-cors-headers==3.7.0
 numpy==1.19.5
-Pillow==8.3.0
+Pillow==9.0.1
 sqlparse==0.4.1
 tensorflow==2.4.2
 termcolor==1.1.0
